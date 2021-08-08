@@ -18,6 +18,19 @@ npm run test
 ```
 
 ---
+## how to deploy to Azure Server?
+modify the file server/index.ts change the port param from number to String
+change
+```ts
+const port = process.env.PORT || 3000;
+```
+to 
+```ts
+const port = parseInt(process.env.PORT ?? '3000');
+```
+in VSCode Azure extension > choose the app, click **deploy** button
+
+---
 
 ## How do I modify the example API and make it my own?
 
