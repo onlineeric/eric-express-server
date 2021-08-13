@@ -7,8 +7,16 @@ interface Example {
 }
 
 const examples: Example[] = [
-  { id: id++, name: 'example 0' },
-  { id: id++, name: 'example 1' },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
+  { id: id++, name: `example ${id-1}` },
 ];
 
 export class ExamplesService {
@@ -19,7 +27,7 @@ export class ExamplesService {
 
   byId(id: number): Promise<Example> {
     L.info(`fetch example with id ${id}`);
-    return this.all().then((r) => r[id]);
+    return this.all().then((r) => (r.filter((item) => item.id === id)[0]));
   }
 
   create(name: string): Promise<Example> {
@@ -30,6 +38,14 @@ export class ExamplesService {
     };
     examples.push(example);
     return Promise.resolve(example);
+  }
+
+  delete(id: number): Promise<Example> {
+    L.info(`delete example with id ${id}`);
+    return this.all().then((r) => {
+      const idx = r.findIndex((item) => item.id === id);
+      return examples.splice(idx, 1)[0];
+    })
   }
 }
 
