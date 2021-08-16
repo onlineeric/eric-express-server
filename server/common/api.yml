@@ -29,12 +29,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleBody'
+              $ref: '#/components/schemas/ExampleRequestNoID'
         required: true
       responses:
-        200:
-          description: Returns all examples
-          content: {}
+        201:
+          description: Returns example created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
   /examples/{id}:
     get:
       tags:
@@ -53,6 +56,40 @@ paths:
         404:
           description: Example not found
           content: {}
+    delete:
+      tags:
+      - Examples
+      parameters:
+      - name: id
+        in: path
+        description: The id of the example to delete
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Return the deleted example with the specified id
+          content: {}
+        404:
+          description: Example not found
+          content: {}
+    put:
+      tags:
+      - Examples
+      parameters:
+      - name: id
+        in: path
+        description: The id of the example to create/update
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Return the example being created/updated
+          content: {}
+        404:
+          description: Example not found
+          content: {}
   /spec:
     get:
       tags:
@@ -63,12 +100,28 @@ paths:
           content: {}
 components:
   schemas:
-    ExampleBody:
+    ExampleRequestNoID:
       title: example
       required:
       - name
       type: object
       properties:
+        id: 
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: no_stress
+    ExampleResponse:
+      title: example
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 10
         name:
           type: string
           example: no_stress

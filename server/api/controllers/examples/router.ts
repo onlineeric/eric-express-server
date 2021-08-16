@@ -1,7 +1,21 @@
 import express from 'express';
 import controller from './controller';
-export default express
-  .Router()
-  .post('/', controller.create)
-  .get('/', controller.all)
-  .get('/:id', controller.byId);
+
+const router = express.Router();
+
+//////////////////////////////////////////////////////////////////
+// Routes
+//////////////////////////////////////////////////////////////////
+router.route('/:id')
+  .get(controller.byId)
+  .delete(controller.delete)
+  .put(controller.put)
+  ;
+
+router.route('/')
+  .get(controller.all)
+  .post(controller.create)
+  ;
+
+
+export default router;

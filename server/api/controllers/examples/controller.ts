@@ -19,5 +19,35 @@ export class Controller {
       res.status(201).location(`/api/v1/examples/${r.id}`).json(r)
     );
   }
+
+  delete(req: Request, res: Response): void {
+    const id = Number.parseInt(req.params['id']);
+    ExamplesService.delete(id).then((r) => {
+      if (r) res.json(r);
+      else res.status(404).end();
+    });
+  }
+
+  // if exists then update, else create new
+  put(req: Request, res: Response): void {
+    const id = req.body?.id;
+    const name = req.body?.name;
+
+    if (!id) {
+      // create new
+      this.create(req, res);
+    } else {
+      // get the record
+      ExamplesService.byId(id).then((r) => {
+        if (!r) res.status(404).end()
+        else {
+          // update the record
+          res.json(r);
+        }
+      });
+  
+    }
+  }
+
 }
 export default new Controller();
