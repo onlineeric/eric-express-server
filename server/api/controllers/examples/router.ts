@@ -10,6 +10,7 @@ router.route('/:id')
   .get(controller.byId)
   .delete(controller.delete)
   .put(controller.put)
+  .patch(controller.patch)
   ;
 
 router.route('/')

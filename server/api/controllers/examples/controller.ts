@@ -30,24 +30,40 @@ export class Controller {
 
   // if exists then update, else create new
   put(req: Request, res: Response): void {
-    const id = req.body?.id;
+    const id = Number.parseInt(req.params['id']);
     const name = req.body?.name;
 
-    if (!id) {
-      // create new
-      this.create(req, res);
-    } else {
-      // get the record
-      ExamplesService.byId(id).then((r) => {
-        if (!r) res.status(404).end()
-        else {
-          // update the record
-          res.json(r);
-        }
-      });
-  
-    }
+    // get the record
+    ExamplesService.byId(id).then((r) => {
+      if (!r) {
+        // create the record
+        if (!req.body?.id || req.body.id !== id) req.body.id = id; // assign the id if
+        ExamplesService.create(req.body.name).then((r) =>
+            res.status(201).location(`/api/v1/examples/${r.id}`).json(r)
+        );  
+      } else {
+        // update the record
+        r.name = name;
+        res.json(r);
+      }
+    });
   }
 
+  // if exists then update, else create new
+  patch(req: Request, res: Response): void {
+    const id = Number.parseInt(req.params['id']);
+    const name = req.body?.name;
+
+    // get the record
+    ExamplesService.byId(id).then((r) => {
+      if (!r) {
+        res.status(404).end();          
+      } else {
+        // update the record
+        r.name = name;
+        res.json(r);
+      }
+    });
+  }
 }
 export default new Controller();

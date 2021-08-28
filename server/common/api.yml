@@ -85,7 +85,24 @@ paths:
           type: integer
       responses:
         200:
-          description: Return the example being created/updated
+          description: Return the example being updated
+          content: {}
+        201:
+          description: Return the example being created
+          content: {}
+    patch:
+      tags:
+      - Examples
+      parameters:
+      - name: id
+        in: path
+        description: The id of the example to update
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Return the example being updated
           content: {}
         404:
           description: Example not found
