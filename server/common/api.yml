@@ -124,6 +124,15 @@ paths:
         201:
           description: Returns test created
           content: {}
+  /products:
+    get:
+      tags:
+        - product
+      description: Fetch all products
+      responses:
+        200:
+          description: Returns all products
+          content: {}
   /spec:
     get:
       tags:
